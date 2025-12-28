@@ -6,19 +6,20 @@ namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Collection;
 
 final class DailySalesReport extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * Create a new message instance.
      *
-     * @param  array{date: string, total_orders: int, total_revenue: string, total_items_sold: int, orders: Collection, top_products: Collection}  $report
+     * @param  array<string, mixed>  $report
      */
     public function __construct(public array $report) {}
 
@@ -27,8 +28,11 @@ final class DailySalesReport extends Mailable
      */
     public function envelope(): Envelope
     {
+        /** @var string $date */
+        $date = $this->report['date'];
+
         return new Envelope(
-            subject: "Daily Sales Report - {$this->report['date']}",
+            subject: 'Daily Sales Report - '.$date,
         );
     }
 
@@ -48,7 +52,7 @@ final class DailySalesReport extends Mailable
     /**
      * Get the attachments for the message.
      *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     * @return array<int, Attachment>
      */
     public function attachments(): array
     {

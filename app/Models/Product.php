@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Database\Factories\ProductFactory;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,7 +16,7 @@ use Illuminate\Support\Str;
 
 final class Product extends Model
 {
-    /** @use HasFactory<\Database\Factories\ProductFactory> */
+    /** @use HasFactory<ProductFactory> */
     use HasFactory;
 
     /** @var list<string> */
@@ -51,15 +53,6 @@ final class Product extends Model
         return $this->hasMany(OrderItem::class);
     }
 
-    /**
-     * @param  Builder<Product>  $query
-     * @return Builder<Product>
-     */
-    public function scopeActive(Builder $query): Builder
-    {
-        return $query->where('is_active', true);
-    }
-
     public function getRouteKeyName(): string
     {
         return 'slug';
@@ -74,6 +67,16 @@ final class Product extends Model
         });
     }
 
+    /**
+     * @param  Builder<Product>  $query
+     * @return Builder<Product>
+     */
+    #[Scope]
+    protected function active(Builder $query): Builder
+    {
+        return $query->where('is_active', true);
+    }
+
     protected function casts(): array
     {
         return [
@@ -84,12 +87,12 @@ final class Product extends Model
     }
 
     /**
-     * @return Attribute<string, never>
+     * @return Attribute<non-empty-string, never>
      */
     protected function formattedPrice(): Attribute
     {
         return Attribute::get(
-            fn (): string => config('shop.currency_symbol').$this->price
+            fn (): string => moneyFormat($this->price)
         );
     }
 
@@ -124,6 +127,7 @@ final class Product extends Model
                 return null;
             }
 
+            /** @var string $image */
             // If already a full URL or absolute path, return as-is
             if (str_starts_with($image, '/') || str_starts_with($image, 'http')) {
                 return $image;

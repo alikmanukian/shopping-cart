@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { router } from '@inertiajs/vue3';
-import { Loader2 } from 'lucide-vue-next';
+import InputError from '@/components/InputError.vue';
+import TextLink from '@/components/TextLink.vue';
+import Button from '@/components/ui/button/Button.vue';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
     Dialog,
     DialogContent,
@@ -11,12 +12,11 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
-import Button from '@/components/ui/button/Button.vue';
-import InputError from '@/components/InputError.vue';
-import TextLink from '@/components/TextLink.vue';
-import { store } from '@/routes/login';
 import { register } from '@/routes';
+import { store } from '@/routes/login';
+import { router } from '@inertiajs/vue3';
+import { Loader2 } from 'lucide-vue-next';
+import { ref } from 'vue';
 
 interface Props {
     open: boolean;
@@ -26,7 +26,7 @@ defineProps<Props>();
 
 const emit = defineEmits<{
     'update:open': [value: boolean];
-    'success': [];
+    success: [];
 }>();
 
 const email = ref('');
@@ -39,24 +39,28 @@ const handleSubmit = () => {
     processing.value = true;
     errors.value = {};
 
-    router.post(store().url, {
-        email: email.value,
-        password: password.value,
-        remember: remember.value,
-    }, {
-        preserveScroll: true,
-        onSuccess: () => {
-            processing.value = false;
-            email.value = '';
-            password.value = '';
-            emit('update:open', false);
-            emit('success');
+    router.post(
+        store().url,
+        {
+            email: email.value,
+            password: password.value,
+            remember: remember.value,
         },
-        onError: (errs) => {
-            processing.value = false;
-            errors.value = errs as { email?: string; password?: string };
+        {
+            preserveScroll: true,
+            onSuccess: () => {
+                processing.value = false;
+                email.value = '';
+                password.value = '';
+                emit('update:open', false);
+                emit('success');
+            },
+            onError: (errs) => {
+                processing.value = false;
+                errors.value = errs as { email?: string; password?: string };
+            },
         },
-    });
+    );
 };
 
 const handleOpenChange = (value: boolean) => {
@@ -76,7 +80,10 @@ const handleOpenChange = (value: boolean) => {
                 </DialogTitle>
                 <DialogDescription>
                     Don't have an account?
-                    <TextLink :href="register()" class="text-shop-blue hover:text-shop-blue-dark">
+                    <TextLink
+                        :href="register()"
+                        class="text-shop-blue hover:text-shop-blue-dark"
+                    >
                         Get started
                     </TextLink>
                 </DialogDescription>
@@ -128,7 +135,10 @@ const handleOpenChange = (value: boolean) => {
                     :disabled="processing"
                     class="w-full rounded-full bg-shop-blue hover:bg-shop-blue-dark"
                 >
-                    <Loader2 v-if="processing" class="mr-2 h-4 w-4 animate-spin" />
+                    <Loader2
+                        v-if="processing"
+                        class="mr-2 h-4 w-4 animate-spin"
+                    />
                     {{ processing ? 'Logging in...' : 'Login' }}
                 </Button>
             </form>

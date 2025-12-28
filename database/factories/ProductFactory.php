@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
+ * @extends Factory<Product>
  */
 final class ProductFactory extends Factory
 {
@@ -19,6 +20,7 @@ final class ProductFactory extends Factory
      */
     public function definition(): array
     {
+        /** @var string $name */
         $name = fake()->unique()->words(3, true);
 
         return [

@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { usePage } from '@inertiajs/vue3';
-import { computed, onMounted, onUnmounted, ref } from 'vue';
-import ShopHeader from './ShopHeader.vue';
-import ShopFooter from './ShopFooter.vue';
-import LoginModal from '@/components/shop/LoginModal.vue';
 import CartModal from '@/components/shop/CartModal.vue';
+import LoginModal from '@/components/shop/LoginModal.vue';
 import { Sonner } from '@/components/ui/sonner';
 import { useLoginModal } from '@/composables/useLoginModal';
-import { CheckCircle, XCircle, X } from 'lucide-vue-next';
+import { usePage } from '@inertiajs/vue3';
+import { CheckCircle, X, XCircle } from 'lucide-vue-next';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
+import ShopFooter from './ShopFooter.vue';
+import ShopHeader from './ShopHeader.vue';
 
 const page = usePage();
 const { isOpen: loginModalOpen, executePendingAction } = useLoginModal();
@@ -16,7 +16,9 @@ const handleLoginSuccess = () => {
     executePendingAction();
 };
 
-const flash = computed(() => page.props.flash as { success?: string; error?: string } | undefined);
+const flash = computed(
+    () => page.props.flash as { success?: string; error?: string } | undefined,
+);
 const showFlash = ref(false);
 const flashTimeout = ref<ReturnType<typeof setTimeout> | null>(null);
 
@@ -56,7 +58,7 @@ onUnmounted(() => {
         >
             <div
                 v-if="showFlash && (flash?.success || flash?.error)"
-                class="fixed left-1/2 top-20 z-50 w-full max-w-md -translate-x-1/2 px-4"
+                class="fixed top-20 left-1/2 z-50 w-full max-w-md -translate-x-1/2 px-4"
             >
                 <div
                     :class="[
@@ -66,7 +68,10 @@ onUnmounted(() => {
                             : 'bg-shop-error text-white',
                     ]"
                 >
-                    <CheckCircle v-if="flash?.success" class="h-5 w-5 shrink-0" />
+                    <CheckCircle
+                        v-if="flash?.success"
+                        class="h-5 w-5 shrink-0"
+                    />
                     <XCircle v-else class="h-5 w-5 shrink-0" />
                     <p class="flex-1 text-sm font-medium">
                         {{ flash?.success || flash?.error }}

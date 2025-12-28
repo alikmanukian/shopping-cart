@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useForm } from '@inertiajs/vue3';
-import { ref, watch } from 'vue';
-import { Trash2, Loader2 } from 'lucide-vue-next';
+import { destroy as cartDestroy, update as cartUpdate } from '@/routes/cart';
 import type { CartItem } from '@/types/shop';
-import { update as cartUpdate, destroy as cartDestroy } from '@/routes/cart';
+import { useForm } from '@inertiajs/vue3';
+import { Loader2, Trash2 } from 'lucide-vue-next';
+import { ref, watch } from 'vue';
 import QuantitySelector from './QuantitySelector.vue';
 
 interface Props {
@@ -60,14 +60,12 @@ const handleDelete = () => {
         ]"
     >
         <!-- Product Image with Quantity Badge -->
-        <div
-            class="relative h-20 w-20 shrink-0 bg-gray-100"
-        >
+        <div class="relative h-20 w-20 shrink-0 bg-gray-100">
             <img
                 v-if="item.product.image_url"
                 :src="item.product.image_url"
                 :alt="item.product.name"
-                class="h-full w-full object-cover rounded-lg"
+                class="h-full w-full rounded-lg object-cover"
             />
             <div
                 v-else
@@ -80,7 +78,7 @@ const handleDelete = () => {
 
             <!-- Quantity Badge -->
             <div
-                class="absolute -left-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-shop-blue text-xs font-bold text-white shadow-sm"
+                class="absolute -top-2 -left-2 flex h-6 w-6 items-center justify-center rounded-full bg-shop-blue text-xs font-bold text-white shadow-sm"
             >
                 {{ item.quantity }}
             </div>

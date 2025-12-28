@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { Link, usePage, useForm } from '@inertiajs/vue3';
-import { Plus, Minus, Trash2, ShoppingBag } from 'lucide-vue-next';
-import type { Cart, CartItem } from '@/types/shop';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
 import Button from '@/components/ui/button/Button.vue';
-import { toast } from '@/components/ui/sonner';
-import { index as checkoutIndex } from '@/routes/checkout';
-import { home } from '@/routes';
-import { update as cartUpdate, destroy as cartDestroy } from '@/routes/cart';
-import { useCartModal } from '@/composables/useCartModal';
 import { DialogDescription, DialogTitle } from '@/components/ui/dialog';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { toast } from '@/components/ui/sonner';
+import { useCartModal } from '@/composables/useCartModal';
+import { home } from '@/routes';
+import { destroy as cartDestroy, update as cartUpdate } from '@/routes/cart';
+import { index as checkoutIndex } from '@/routes/checkout';
+import type { Cart, CartItem } from '@/types/shop';
+import { Link, useForm, usePage } from '@inertiajs/vue3';
+import { Minus, Plus, ShoppingBag, Trash2 } from 'lucide-vue-next';
+import { computed } from 'vue';
 
 const page = usePage();
 const { isOpen, close } = useCartModal();

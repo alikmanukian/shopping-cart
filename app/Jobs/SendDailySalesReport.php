@@ -28,7 +28,7 @@ final class SendDailySalesReport implements ShouldQueue
     {
         $report = $action->handle($this->date);
 
-        $admins = User::where('is_admin', true)->get();
+        $admins = User::query()->where('is_admin', true)->get();
 
         if ($admins->isEmpty()) {
             $admins = collect([config('shop.admin_email')]);

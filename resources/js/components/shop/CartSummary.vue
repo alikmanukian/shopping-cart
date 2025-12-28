@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
-import type { Cart } from '@/types/shop';
-import { index as checkoutIndex } from '@/routes/checkout';
 import Button from '@/components/ui/button/Button.vue';
+import { index as checkoutIndex } from '@/routes/checkout';
+import type { Cart } from '@/types/shop';
+import { Link } from '@inertiajs/vue3';
 
 interface Props {
     cart: Cart;
@@ -18,10 +18,10 @@ withDefaults(defineProps<Props>(), {
     <div class="rounded-xl bg-shop-cream p-6">
         <div class="space-y-4">
             <div class="flex items-center justify-between text-sm">
-                <span class="text-shop-text-light">
-                    Subtotal
-                </span>
-                <span class="font-semibold text-shop-text">${{ cart.subtotal }}</span>
+                <span class="text-shop-text-light"> Subtotal </span>
+                <span class="font-semibold text-shop-text"
+                    >${{ cart.subtotal }}</span
+                >
             </div>
 
             <div class="flex items-center justify-between text-sm">
@@ -34,7 +34,9 @@ withDefaults(defineProps<Props>(), {
                     <span class="text-base font-semibold text-shop-text">
                         Total
                     </span>
-                    <span class="text-xl font-bold text-shop-text">${{ cart.subtotal }}</span>
+                    <span class="text-xl font-bold text-shop-text"
+                        >${{ cart.subtotal }}</span
+                    >
                 </div>
             </div>
         </div>

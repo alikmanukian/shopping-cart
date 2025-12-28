@@ -14,20 +14,24 @@ final readonly class UpdateCartItem
      */
     public function handle(CartItem $cartItem, int $quantity): CartItem
     {
-        if ($quantity < 1) {
-            throw new InvalidArgumentException('Quantity must be at least 1.');
-        }
+        throw_if($quantity < 1, InvalidArgumentException::class, 'Quantity must be at least 1.');
+
+        $cartItem->loadMissing('product');
 
         $product = $cartItem->product;
+        throw_if($product === null, InvalidArgumentException::class, 'Product not found.');
 
         if ($quantity > $product->stock_quantity) {
             throw new InvalidArgumentException(
-                "Insufficient stock. Only {$product->stock_quantity} available."
+                sprintf('Insufficient stock. Only %s available.', $product->stock_quantity)
             );
         }
 
         $cartItem->update(['quantity' => $quantity]);
 
-        return $cartItem->fresh();
+        /** @var CartItem $freshItem */
+        $freshItem = $cartItem->fresh();
+
+        return $freshItem;
     }
 }

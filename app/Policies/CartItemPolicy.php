@@ -14,7 +14,7 @@ final class CartItemPolicy
      */
     public function update(User $user, CartItem $cartItem): bool
     {
-        return $cartItem->cart->user_id === $user->id;
+        return $cartItem->cart?->user_id === $user->id;
     }
 
     /**
@@ -22,6 +22,6 @@ final class CartItemPolicy
      */
     public function delete(User $user, CartItem $cartItem): bool
     {
-        return $cartItem->cart->user_id === $user->id;
+        return $cartItem->cart?->user_id === $user->id;
     }
 }

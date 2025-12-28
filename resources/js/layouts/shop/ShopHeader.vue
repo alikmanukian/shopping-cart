@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { Link, usePage, router } from '@inertiajs/vue3';
-import { computed } from 'vue';
-import { ShoppingCart, User, LogOut, ChevronDown } from 'lucide-vue-next';
-import { home, login, register, logout } from '@/routes';
-import type { Cart } from '@/types/shop';
-import { useCartModal } from '@/composables/useCartModal';
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useCartModal } from '@/composables/useCartModal';
+import { home, login, logout, register } from '@/routes';
+import type { Cart } from '@/types/shop';
+import { Link, router, usePage } from '@inertiajs/vue3';
+import { ChevronDown, LogOut, ShoppingCart, User } from 'lucide-vue-next';
+import { computed } from 'vue';
 
 const page = usePage();
 const { open: openCartModal } = useCartModal();
@@ -26,7 +26,9 @@ const handleLogout = () => {
 </script>
 
 <template>
-    <header class="sticky top-0 z-50 w-full border-b border-gray-100 bg-white/95 backdrop-blur-sm">
+    <header
+        class="sticky top-0 z-50 w-full border-b border-gray-100 bg-white/95 backdrop-blur-sm"
+    >
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="flex h-16 items-center justify-between lg:h-20">
                 <!-- Logo -->
@@ -35,10 +37,17 @@ const handleLogout = () => {
                         :href="home().url"
                         class="group flex items-center gap-3 transition-opacity hover:opacity-80"
                     >
-                        <div class="flex h-10 w-10 items-center justify-center rounded-full bg-shop-blue">
-                            <span class="font-display text-lg font-bold text-white">F</span>
+                        <div
+                            class="flex h-10 w-10 items-center justify-center rounded-full bg-shop-blue"
+                        >
+                            <span
+                                class="font-display text-lg font-bold text-white"
+                                >F</span
+                            >
                         </div>
-                        <span class="font-display text-xl tracking-tight text-gray-900">
+                        <span
+                            class="font-display text-xl tracking-tight text-gray-900"
+                        >
                             Fresh<span class="text-shop-blue">Cart</span>
                         </span>
                     </Link>
@@ -75,7 +84,10 @@ const handleLogout = () => {
                                 </button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end" class="w-48">
-                                <DropdownMenuItem @click="handleLogout" class="cursor-pointer text-red-600 focus:text-red-600">
+                                <DropdownMenuItem
+                                    @click="handleLogout"
+                                    class="cursor-pointer text-red-600 focus:text-red-600"
+                                >
                                     <LogOut class="mr-2 h-4 w-4" />
                                     Log out
                                 </DropdownMenuItem>
@@ -91,7 +103,9 @@ const handleLogout = () => {
                             <ShoppingCart class="h-4 w-4" />
                             <template v-if="cartCount > 0">
                                 <span>Order: ${{ cartTotal }}</span>
-                                <span class="flex h-5 w-5 items-center justify-center rounded-full bg-shop-orange text-xs font-bold">
+                                <span
+                                    class="flex h-5 w-5 items-center justify-center rounded-full bg-shop-orange text-xs font-bold"
+                                >
                                     {{ cartCount > 9 ? '9+' : cartCount }}
                                 </span>
                             </template>

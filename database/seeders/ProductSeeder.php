@@ -150,10 +150,7 @@ final class ProductSeeder extends Seeder
         ];
 
         foreach ($products as $product) {
-            Product::firstOrCreate(
-                ['slug' => $product['slug']],
-                $product
-            );
+            Product::query()->firstOrCreate(['slug' => $product['slug']], $product);
         }
     }
 }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import { AlertCircle, CheckCircle, XCircle } from 'lucide-vue-next';
+import { computed } from 'vue';
 
 interface Props {
     quantity: number;

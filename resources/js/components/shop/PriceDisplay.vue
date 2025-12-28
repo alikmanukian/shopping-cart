@@ -14,7 +14,7 @@ withDefaults(defineProps<Props>(), {
 <template>
     <span
         :class="[
-            'font-semibold tabular-nums tracking-tight',
+            'font-semibold tracking-tight tabular-nums',
             {
                 'text-sm': size === 'sm',
                 'text-base': size === 'md',

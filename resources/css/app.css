@@ -15,20 +15,19 @@
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
         'Noto Color Emoji';
 
-    --font-display:
-        'DM Serif Display', Georgia, 'Times New Roman', serif;
+    --font-display: 'DM Serif Display', Georgia, 'Times New Roman', serif;
 
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
     --radius-sm: calc(var(--radius) - 4px);
 
     /* Shop Colors - Primary Blue #1850DC */
-    --color-shop-blue: #1850DC;
+    --color-shop-blue: #1850dc;
     --color-shop-blue-dark: #1240b0;
     --color-shop-blue-light: #4a7ae8;
     --color-shop-orange: #e67e22;
     --color-shop-orange-dark: #d35400;
-    --color-shop-cream: #F5F2EA;
+    --color-shop-cream: #f5f2ea;
     --color-shop-cream-dark: #ebe8e0;
     --color-shop-beige: #f9f5f0;
     --color-shop-success: #27ae60;

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import { Minus, Plus } from 'lucide-vue-next';
+import { computed } from 'vue';
 
 interface Props {
     modelValue: number;
@@ -21,8 +21,12 @@ const emit = defineEmits<{
     'update:modelValue': [value: number];
 }>();
 
-const canDecrement = computed(() => props.modelValue > props.min && !props.disabled);
-const canIncrement = computed(() => props.modelValue < props.max && !props.disabled);
+const canDecrement = computed(
+    () => props.modelValue > props.min && !props.disabled,
+);
+const canIncrement = computed(
+    () => props.modelValue < props.max && !props.disabled,
+);
 
 const decrement = () => {
     if (canDecrement.value) {
@@ -76,7 +80,7 @@ const handleInput = (event: Event) => {
             :disabled="disabled"
             :class="[
                 'border-x border-gray-200 bg-transparent text-center font-medium tabular-nums',
-                'focus:outline-none focus:ring-0',
+                'focus:ring-0 focus:outline-none',
                 '[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none',
                 size === 'sm' ? 'h-8 w-10 text-sm' : 'h-10 w-14 text-base',
             ]"

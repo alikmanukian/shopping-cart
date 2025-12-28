@@ -20,7 +20,7 @@ final readonly class CheckLowStock
             return false;
         }
 
-        SendLowStockNotification::dispatch($product);
+        dispatch(new SendLowStockNotification($product));
 
         return true;
     }

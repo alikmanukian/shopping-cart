@@ -10,6 +10,6 @@ final readonly class RemoveFromCart
 {
     public function handle(CartItem $cartItem): bool
     {
-        return $cartItem->delete();
+        return (bool) $cartItem->delete();
     }
 }

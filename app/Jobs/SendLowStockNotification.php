@@ -25,7 +25,7 @@ final class SendLowStockNotification implements ShouldQueue
      */
     public function handle(): void
     {
-        $admins = User::where('is_admin', true)->get();
+        $admins = User::query()->where('is_admin', true)->get();
 
         if ($admins->isEmpty()) {
             $admins = collect([config('shop.admin_email')]);

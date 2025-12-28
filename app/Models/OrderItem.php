@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Database\Factories\OrderItemFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 final class OrderItem extends Model
 {
-    /** @use HasFactory<\Database\Factories\OrderItemFactory> */
+    /** @use HasFactory<OrderItemFactory> */
     use HasFactory;
 
     protected $fillable = [
@@ -49,22 +50,22 @@ final class OrderItem extends Model
     }
 
     /**
-     * @return Attribute<string, never>
+     * @return Attribute<non-empty-string, never>
      */
     protected function formattedPrice(): Attribute
     {
         return Attribute::get(
-            fn (): string => config('shop.currency_symbol').$this->product_price
+            fn (): string => moneyFormat($this->product_price)
         );
     }
 
     /**
-     * @return Attribute<string, never>
+     * @return Attribute<non-empty-string, never>
      */
     protected function formattedSubtotal(): Attribute
     {
         return Attribute::get(
-            fn (): string => config('shop.currency_symbol').$this->subtotal
+            fn (): string => moneyFormat($this->subtotal)
         );
     }
 }

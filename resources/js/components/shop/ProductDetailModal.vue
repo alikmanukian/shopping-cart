@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
-import { usePage, useForm } from '@inertiajs/vue3';
-import { X, Loader2, Check, Plus, Minus } from 'lucide-vue-next';
-import type { Product } from '@/types/shop';
+import Button from '@/components/ui/button/Button.vue';
 import {
     Dialog,
     DialogContent,
     DialogDescription,
     DialogTitle,
 } from '@/components/ui/dialog';
-import Button from '@/components/ui/button/Button.vue';
 import { toast } from '@/components/ui/sonner';
-import { store as cartStore } from '@/routes/cart';
 import { useLoginModal } from '@/composables/useLoginModal';
+import { store as cartStore } from '@/routes/cart';
+import type { Product } from '@/types/shop';
+import { useForm, usePage } from '@inertiajs/vue3';
+import { Check, Loader2, Minus, Plus, X } from 'lucide-vue-next';
+import { computed, ref, watch } from 'vue';
 
 interface Props {
     product: Product | null;

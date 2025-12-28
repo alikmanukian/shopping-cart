@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { useForm, usePage } from '@inertiajs/vue3';
-import { computed, ref } from 'vue';
-import { ShoppingCart, Loader2, Check } from 'lucide-vue-next';
 import Button from '@/components/ui/button/Button.vue';
 import { toast } from '@/components/ui/sonner';
-import { store as cartStore } from '@/routes/cart';
 import { useLoginModal } from '@/composables/useLoginModal';
+import { store as cartStore } from '@/routes/cart';
+import { useForm, usePage } from '@inertiajs/vue3';
+import { Check, Loader2, ShoppingCart } from 'lucide-vue-next';
+import { computed, ref } from 'vue';
 
 interface Props {
     productId: number;

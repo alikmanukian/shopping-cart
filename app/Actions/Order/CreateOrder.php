@@ -8,7 +8,9 @@ use App\Actions\Cart\ClearCart;
 use App\Actions\Product\CheckLowStock;
 use App\Actions\Product\DecrementStock;
 use App\Models\Cart;
+use App\Models\CartItem;
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
@@ -30,22 +32,28 @@ final readonly class CreateOrder
     {
         $cart->loadMissing(['items.product']);
 
-        if ($cart->items->isEmpty()) {
-            throw new InvalidArgumentException('Cart is empty.');
-        }
+        throw_if($cart->items->isEmpty(), InvalidArgumentException::class, 'Cart is empty.');
 
         foreach ($cart->items as $item) {
-            if ($item->quantity > $item->product->stock_quantity) {
+            $product = $item->product;
+            throw_if($product === null, InvalidArgumentException::class, 'Product not found.');
+
+            if ($item->quantity > $product->stock_quantity) {
                 throw new InvalidArgumentException(
-                    "Insufficient stock for {$item->product->name}. Only {$item->product->stock_quantity} available."
+                    sprintf('Insufficient stock for %s. Only %s available.', $product->name, $product->stock_quantity)
                 );
             }
         }
 
         return DB::transaction(function () use ($user, $cart): Order {
-            $subtotal = $cart->items->sum(fn ($item) => $item->quantity * $item->product->price);
+            $subtotal = $cart->items->sum(function (CartItem $item): float {
+                /** @var Product $product */
+                $product = $item->product;
 
-            $order = Order::create([
+                return $item->quantity * $product->price;
+            });
+
+            $order = Order::query()->create([
                 'user_id' => $user->id,
                 'status' => Order::STATUS_PENDING,
                 'subtotal' => $subtotal,
@@ -53,23 +61,33 @@ final readonly class CreateOrder
             ]);
 
             foreach ($cart->items as $item) {
+                /** @var Product $product */
+                $product = $item->product;
+
                 $order->items()->create([
-                    'product_id' => $item->product->id,
-                    'product_name' => $item->product->name,
-                    'product_price' => $item->product->price,
+                    'product_id' => $product->id,
+                    'product_name' => $product->name,
+                    'product_price' => $product->price,
                     'quantity' => $item->quantity,
-                    'subtotal' => $item->quantity * $item->product->price,
+                    'subtotal' => $item->quantity * $product->price,
                 ]);
 
-                $this->decrementStock->handle($item->product, $item->quantity);
-                $this->checkLowStock->handle($item->product->fresh());
+                $this->decrementStock->handle($product, $item->quantity);
+
+                $freshProduct = $product->fresh();
+                if ($freshProduct !== null) {
+                    $this->checkLowStock->handle($freshProduct);
+                }
             }
 
             $this->clearCart->handle($cart);
 
             $order->markAsCompleted();
 
-            return $order->fresh()?->load('items');
+            /** @var Order $freshOrder */
+            $freshOrder = $order->fresh();
+
+            return $freshOrder->load('items');
         });
     }
 }

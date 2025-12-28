@@ -49,9 +49,9 @@ final class CartController extends Controller
                 $request->integer('quantity')
             );
 
-            return back()->with('success', "{$product->name} added to cart.");
-        } catch (InvalidArgumentException $e) {
-            return back()->withErrors(['quantity' => $e->getMessage()]);
+            return back()->with('success', $product->name.' added to cart.');
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            return back()->withErrors(['quantity' => $invalidArgumentException->getMessage()]);
         }
     }
 
@@ -61,8 +61,8 @@ final class CartController extends Controller
             $this->updateCartItem->handle($cartItem, $request->integer('quantity'));
 
             return back()->with('success', 'Cart updated.');
-        } catch (InvalidArgumentException $e) {
-            return back()->withErrors(['quantity' => $e->getMessage()]);
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            return back()->withErrors(['quantity' => $invalidArgumentException->getMessage()]);
         }
     }
 
@@ -70,8 +70,10 @@ final class CartController extends Controller
     {
         $this->authorize('delete', $cartItem);
 
+        $productName = $cartItem->product->name ?? 'Product';
+
         $this->removeFromCart->handle($cartItem);
 
-        return back()->with('success', "{$cartItem->product->name} removed from cart.");
+        return back()->with('success', $productName.' removed from cart.');
     }
 }

@@ -13,6 +13,7 @@ use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 use InvalidArgumentException;
+use Throwable;
 
 final class CheckoutController extends Controller
 {
@@ -32,6 +33,9 @@ final class CheckoutController extends Controller
         ]);
     }
 
+    /**
+     * @throws Throwable
+     */
     public function store(#[CurrentUser] User $user): RedirectResponse
     {
         $cart = $this->getUserCart->handle($user);
@@ -39,10 +43,10 @@ final class CheckoutController extends Controller
         try {
             $order = $this->createOrder->handle($user, $cart);
 
-            return redirect()->route('checkout.success', $order)
+            return to_route('checkout.success', $order)
                 ->with('success', 'Order placed successfully!');
-        } catch (InvalidArgumentException $e) {
-            return back()->withErrors(['checkout' => $e->getMessage()]);
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            return back()->withErrors(['checkout' => $invalidArgumentException->getMessage()]);
         }
     }
 

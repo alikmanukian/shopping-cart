@@ -18,9 +18,7 @@ final readonly class AddToCart
      */
     public function handle(User $user, Product $product, int $quantity = 1): CartItem
     {
-        if ($quantity < 1) {
-            throw new InvalidArgumentException('Quantity must be at least 1.');
-        }
+        throw_if($quantity < 1, InvalidArgumentException::class, 'Quantity must be at least 1.');
 
         $cart = $this->getUserCart->handle($user);
 
@@ -30,14 +28,17 @@ final readonly class AddToCart
 
         if ($totalQuantity > $product->stock_quantity) {
             throw new InvalidArgumentException(
-                "Insufficient stock. Only {$product->stock_quantity} available."
+                sprintf('Insufficient stock. Only %s available.', $product->stock_quantity)
             );
         }
 
         if ($existingItem) {
             $existingItem->update(['quantity' => $totalQuantity]);
 
-            return $existingItem->fresh();
+            /** @var CartItem $freshItem */
+            $freshItem = $existingItem->fresh();
+
+            return $freshItem;
         }
 
         return $cart->items()->create([

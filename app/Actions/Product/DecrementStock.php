@@ -14,18 +14,19 @@ final readonly class DecrementStock
      */
     public function handle(Product $product, int $quantity): Product
     {
-        if ($quantity < 1) {
-            throw new InvalidArgumentException('Quantity must be at least 1.');
-        }
+        throw_if($quantity < 1, InvalidArgumentException::class, 'Quantity must be at least 1.');
 
         if ($quantity > $product->stock_quantity) {
             throw new InvalidArgumentException(
-                "Insufficient stock. Only {$product->stock_quantity} available."
+                sprintf('Insufficient stock. Only %s available.', $product->stock_quantity)
             );
         }
 
         $product->decrement('stock_quantity', $quantity);
 
-        return $product->fresh();
+        /** @var Product $freshProduct */
+        $freshProduct = $product->fresh();
+
+        return $freshProduct;
     }
 }

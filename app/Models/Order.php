@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Database\Factories\OrderFactory;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,7 +16,7 @@ use Illuminate\Support\Str;
 
 final class Order extends Model
 {
-    /** @use HasFactory<\Database\Factories\OrderFactory> */
+    /** @use HasFactory<OrderFactory> */
     use HasFactory;
 
     public const STATUS_PENDING = 'pending';
@@ -38,7 +40,7 @@ final class Order extends Model
     {
         do {
             $number = 'ORD-'.mb_strtoupper(Str::random(8));
-        } while (self::where('order_number', $number)->exists());
+        } while (self::query()->where('order_number', $number)->exists());
 
         return $number;
     }
@@ -57,24 +59,6 @@ final class Order extends Model
     public function items(): HasMany
     {
         return $this->hasMany(OrderItem::class);
-    }
-
-    /**
-     * @param  Builder<Order>  $query
-     * @return Builder<Order>
-     */
-    public function scopeCompleted(Builder $query): Builder
-    {
-        return $query->where('status', self::STATUS_COMPLETED);
-    }
-
-    /**
-     * @param  Builder<Order>  $query
-     * @return Builder<Order>
-     */
-    public function scopePending(Builder $query): Builder
-    {
-        return $query->where('status', self::STATUS_PENDING);
     }
 
     public function getRouteKeyName(): string
@@ -106,6 +90,26 @@ final class Order extends Model
         });
     }
 
+    /**
+     * @param  Builder<Order>  $query
+     * @return Builder<Order>
+     */
+    #[Scope]
+    protected function completed(Builder $query): Builder
+    {
+        return $query->where('status', self::STATUS_COMPLETED);
+    }
+
+    /**
+     * @param  Builder<Order>  $query
+     * @return Builder<Order>
+     */
+    #[Scope]
+    protected function pending(Builder $query): Builder
+    {
+        return $query->where('status', self::STATUS_PENDING);
+    }
+
     protected function casts(): array
     {
         return [
@@ -116,22 +120,22 @@ final class Order extends Model
     }
 
     /**
-     * @return Attribute<string, never>
+     * @return Attribute<non-empty-string, never>
      */
     protected function formattedTotal(): Attribute
     {
         return Attribute::get(
-            fn (): string => config('shop.currency_symbol').$this->total
+            fn (): string => moneyFormat($this->total)
         );
     }
 
     /**
-     * @return Attribute<string, never>
+     * @return Attribute<non-empty-string, never>
      */
     protected function formattedSubtotal(): Attribute
     {
         return Attribute::get(
-            fn (): string => config('shop.currency_symbol').$this->subtotal
+            fn (): string => moneyFormat($this->subtotal)
         );
     }
 }

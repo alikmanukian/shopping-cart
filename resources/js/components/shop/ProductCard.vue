@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import type { Product } from '@/types/shop';
+import { computed } from 'vue';
 import AddToCartButton from './AddToCartButton.vue';
 
 interface Props {
@@ -10,15 +10,17 @@ interface Props {
 const props = defineProps<Props>();
 
 defineEmits<{
-    'click': [product: Product];
+    click: [product: Product];
 }>();
 
 const isOutOfStock = computed(() => props.product.stock_quantity <= 0);
-const isLowStock = computed(() => props.product.stock_quantity > 0 && props.product.stock_quantity < 3);
+const isLowStock = computed(
+    () => props.product.stock_quantity > 0 && props.product.stock_quantity < 3,
+);
 </script>
 
 <template>
-    <article class="group flex flex-col bg-white rounded-lg overflow-hidden">
+    <article class="group flex flex-col overflow-hidden rounded-lg bg-white">
         <!-- Image Container -->
         <div class="relative aspect-[4/3] overflow-hidden bg-gray-100">
             <button
@@ -44,7 +46,7 @@ const isLowStock = computed(() => props.product.stock_quantity > 0 && props.prod
                 <!-- Low Stock Badge -->
                 <div
                     v-if="isLowStock"
-                    class="absolute left-2 top-2 rounded-full bg-shop-orange px-2.5 py-1 text-xs font-semibold text-white shadow-sm"
+                    class="absolute top-2 left-2 rounded-full bg-shop-orange px-2.5 py-1 text-xs font-semibold text-white shadow-sm"
                 >
                     Only {{ product.stock_quantity }} left
                 </div>
@@ -54,7 +56,9 @@ const isLowStock = computed(() => props.product.stock_quantity > 0 && props.prod
                     v-if="isOutOfStock"
                     class="absolute inset-0 flex items-center justify-center bg-black/50"
                 >
-                    <span class="rounded-full bg-white px-4 py-2 text-sm font-semibold text-gray-900">
+                    <span
+                        class="rounded-full bg-white px-4 py-2 text-sm font-semibold text-gray-900"
+                    >
                         Out of Stock
                     </span>
                 </div>
@@ -65,17 +69,20 @@ const isLowStock = computed(() => props.product.stock_quantity > 0 && props.prod
                 v-if="!isOutOfStock"
                 class="absolute right-2 bottom-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
             >
-                <AddToCartButton
-                    :product-id="product.id"
-                    size="lg"
-                />
+                <AddToCartButton :product-id="product.id" size="lg" />
             </div>
         </div>
 
         <!-- Content -->
         <div class="flex flex-1 flex-col p-3">
-            <button type="button" class="text-left" @click="$emit('click', product)">
-                <h3 class="text-base font-semibold text-shop-text transition-colors group-hover:text-shop-blue">
+            <button
+                type="button"
+                class="text-left"
+                @click="$emit('click', product)"
+            >
+                <h3
+                    class="text-base font-semibold text-shop-text transition-colors group-hover:text-shop-blue"
+                >
                     {{ product.name }}
                 </h3>
             </button>
@@ -89,7 +96,9 @@ const isLowStock = computed(() => props.product.stock_quantity > 0 && props.prod
 
             <!-- Price -->
             <div class="mt-auto pt-4">
-                <span class="text-lg font-bold text-shop-text">${{ product.price }}</span>
+                <span class="text-lg font-bold text-shop-text"
+                    >${{ product.price }}</span
+                >
             </div>
         </div>
     </article>

@@ -53,27 +53,25 @@ final class CartItem extends Model
     }
 
     /**
-     * @return Attribute<string, never>
+     * @return Attribute<numeric-string, never>
      */
     protected function subtotal(): Attribute
     {
-        return Attribute::get(function (): string {
-            return number_format(
-                (float) $this->product->price * $this->quantity,
-                2,
-                '.',
-                ''
-            );
-        });
+        return Attribute::get(fn (): string => number_format(
+            (float) ($this->product->price ?? 0) * $this->quantity,
+            2,
+            '.',
+            ''
+        ));
     }
 
     /**
-     * @return Attribute<string, never>
+     * @return Attribute<non-empty-string, never>
      */
     protected function formattedSubtotal(): Attribute
     {
         return Attribute::get(
-            fn (): string => config('shop.currency_symbol').$this->subtotal
+            fn (): string => moneyFormat($this->subtotal)
         );
     }
 }

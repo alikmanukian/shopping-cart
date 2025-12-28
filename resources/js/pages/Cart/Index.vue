@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { Head, Link } from '@inertiajs/vue3';
-import { Plus } from 'lucide-vue-next';
-import type { Cart, CartItem as CartItemType } from '@/types/shop';
-import ShopLayout from '@/layouts/shop/ShopLayout.vue';
 import CartItem from '@/components/shop/CartItem.vue';
 import CartSummary from '@/components/shop/CartSummary.vue';
 import EmptyState from '@/components/shop/EmptyState.vue';
+import ShopLayout from '@/layouts/shop/ShopLayout.vue';
 import { home } from '@/routes';
+import type { Cart, CartItem as CartItemType } from '@/types/shop';
+import { Head, Link } from '@inertiajs/vue3';
+import { Plus } from 'lucide-vue-next';
 
 interface Props {
     cart: Cart;
@@ -23,7 +23,9 @@ defineProps<Props>();
         <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
             <!-- Header -->
             <div class="mb-8">
-                <h1 class="font-display text-2xl font-bold text-shop-text md:text-3xl">
+                <h1
+                    class="font-display text-2xl font-bold text-shop-text md:text-3xl"
+                >
                     Review your order
                 </h1>
             </div>
@@ -32,7 +34,9 @@ defineProps<Props>();
             <div v-if="items.length > 0" class="grid gap-8 lg:grid-cols-5">
                 <!-- Cart Items -->
                 <div class="lg:col-span-3">
-                    <div class="rounded-xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
+                    <div
+                        class="rounded-xl bg-white p-6 shadow-sm ring-1 ring-gray-100"
+                    >
                         <CartItem
                             v-for="item in items"
                             :key="item.id"
@@ -59,11 +63,7 @@ defineProps<Props>();
             </div>
 
             <!-- Empty State -->
-            <EmptyState
-                v-else
-                type="cart"
-                :action-url="home().url"
-            />
+            <EmptyState v-else type="cart" :action-url="home().url" />
         </div>
     </ShopLayout>
 </template>
