@@ -9,11 +9,6 @@ use Illuminate\Database\Seeder;
 
 final class ProductSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * Products fetched from Blue Apron menu.
-     */
     public function run(): void
     {
         $products = [
@@ -23,7 +18,7 @@ final class ProductSeeder extends Seeder
                 'description' => 'Premium beef tenderloin roasted to perfection, served with seasonal vegetables and a rich red wine reduction sauce.',
                 'price' => 32.99,
                 'stock_quantity' => 15,
-                'image' => 'products/roast-beef-tenderloin.jpg',
+                'image' => '/images/products/roast-beef-tenderloin.jpg',
                 'is_active' => true,
             ],
             [
@@ -32,7 +27,7 @@ final class ProductSeeder extends Seeder
                 'description' => 'A delightful salad featuring caramelized roasted grapes, creamy goat cheese, mixed greens, and candied walnuts with balsamic vinaigrette.',
                 'price' => 16.99,
                 'stock_quantity' => 25,
-                'image' => 'products/roasted-grape-goat-cheese-salad.jpg',
+                'image' => '/images/products/roasted-grape-goat-cheese-salad.jpg',
                 'is_active' => true,
             ],
             [
@@ -41,7 +36,7 @@ final class ProductSeeder extends Seeder
                 'description' => 'Crispy roasted Brussels sprouts with garlic, olive oil, and a touch of balsamic glaze. A perfect side dish.',
                 'price' => 12.99,
                 'stock_quantity' => 30,
-                'image' => 'products/roasted-brussels-sprouts.jpg',
+                'image' => '/images/products/roasted-brussels-sprouts.jpg',
                 'is_active' => true,
             ],
             [
@@ -50,7 +45,7 @@ final class ProductSeeder extends Seeder
                 'description' => 'Golden crispy potatoes roasted with herbs, garlic, and olive oil. Perfectly seasoned and irresistibly crunchy.',
                 'price' => 11.99,
                 'stock_quantity' => 35,
-                'image' => 'products/crispy-roasted-potatoes.jpg',
+                'image' => '/images/products/crispy-roasted-potatoes.jpg',
                 'is_active' => true,
             ],
             [
@@ -59,7 +54,7 @@ final class ProductSeeder extends Seeder
                 'description' => 'Classic comfort food made with a blend of premium cheeses, perfectly cooked pasta, and a crispy breadcrumb topping.',
                 'price' => 14.99,
                 'stock_quantity' => 40,
-                'image' => 'products/creamy-mac-cheese.jpg',
+                'image' => '/images/products/creamy-mac-cheese.jpg',
                 'is_active' => true,
             ],
             [
@@ -68,7 +63,7 @@ final class ProductSeeder extends Seeder
                 'description' => 'Homestyle apple pie with a buttery crumb topping, filled with cinnamon-spiced apples and a flaky crust.',
                 'price' => 18.99,
                 'stock_quantity' => 20,
-                'image' => 'products/apple-crumb-pie.jpg',
+                'image' => '/images/products/apple-crumb-pie.jpg',
                 'is_active' => true,
             ],
             [
@@ -77,7 +72,7 @@ final class ProductSeeder extends Seeder
                 'description' => 'Soft and fluffy challah bread rolls, perfect for any meal. Slightly sweet with a beautiful golden crust.',
                 'price' => 9.99,
                 'stock_quantity' => 45,
-                'image' => 'products/challah-dinner-rolls.jpg',
+                'image' => '/images/products/challah-dinner-rolls.jpg',
                 'is_active' => true,
             ],
             [
@@ -86,7 +81,7 @@ final class ProductSeeder extends Seeder
                 'description' => 'Premium lump crab meat formed into golden cakes, pan-seared and served with house-made tartar sauce.',
                 'price' => 28.99,
                 'stock_quantity' => 12,
-                'image' => 'products/classic-crab-cakes.jpg',
+                'image' => '/images/products/classic-crab-cakes.jpg',
                 'is_active' => true,
             ],
             [
@@ -95,7 +90,7 @@ final class ProductSeeder extends Seeder
                 'description' => 'Flaky puff pastry filled with sautéed wild mushrooms, creamy goat cheese, and fresh thyme.',
                 'price' => 22.99,
                 'stock_quantity' => 18,
-                'image' => 'products/mushroom-goat-cheese-tart.jpg',
+                'image' => '/images/products/mushroom-goat-cheese-tart.jpg',
                 'is_active' => true,
             ],
             [
@@ -104,7 +99,7 @@ final class ProductSeeder extends Seeder
                 'description' => 'Tender chicken breast glazed with a sweet and tangy pomegranate-cherry reduction, served with roasted vegetables.',
                 'price' => 24.99,
                 'stock_quantity' => 22,
-                'image' => 'products/pomegranate-cherry-glazed-chicken.jpg',
+                'image' => '/images/products/pomegranate-cherry-glazed-chicken.jpg',
                 'is_active' => true,
             ],
             [
@@ -113,7 +108,7 @@ final class ProductSeeder extends Seeder
                 'description' => 'Fresh salmon fillet glazed with Thai sweet chili sauce, served over jasmine rice with crispy vegetables.',
                 'price' => 27.99,
                 'stock_quantity' => 16,
-                'image' => 'products/thai-sweet-chili-salmon.jpg',
+                'image' => '/images/products/thai-sweet-chili-salmon.jpg',
                 'is_active' => true,
             ],
             [
@@ -122,7 +117,7 @@ final class ProductSeeder extends Seeder
                 'description' => 'Italian-style sandwiches with thinly sliced prosciutto, fresh mozzarella, tomatoes, and basil on crusty ciabatta.',
                 'price' => 19.99,
                 'stock_quantity' => 28,
-                'image' => 'products/prosciutto-mozzarella-sandwiches.jpg',
+                'image' => '/images/products/prosciutto-mozzarella-sandwiches.jpg',
                 'is_active' => true,
             ],
             [
@@ -131,7 +126,7 @@ final class ProductSeeder extends Seeder
                 'description' => 'Bone-in pork chops marinated in authentic Caribbean jerk seasoning, grilled and served with tropical rice.',
                 'price' => 25.99,
                 'stock_quantity' => 4,
-                'image' => 'products/caribbean-jerk-pork-chops.jpg',
+                'image' => '/images/products/caribbean-jerk-pork-chops.jpg',
                 'is_active' => true,
             ],
             [
@@ -140,7 +135,7 @@ final class ProductSeeder extends Seeder
                 'description' => 'Grilled chicken skewers with creamy peanut satay sauce, served over coconut rice with fresh vegetables.',
                 'price' => 21.99,
                 'stock_quantity' => 26,
-                'image' => 'products/chicken-satay-rice-bowls.jpg',
+                'image' => '/images/products/chicken-satay-rice-bowls.jpg',
                 'is_active' => true,
             ],
             [
@@ -149,7 +144,7 @@ final class ProductSeeder extends Seeder
                 'description' => 'Tender Italian-seasoned chicken smothered in marinara, topped with melted provolone on fresh focaccia bread.',
                 'price' => 20.99,
                 'stock_quantity' => 24,
-                'image' => 'products/saucy-italian-chicken-subs.jpg',
+                'image' => '/images/products/saucy-italian-chicken-subs.jpg',
                 'is_active' => true,
             ],
         ];
