@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Database\Factories\CartFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,11 +13,20 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 final class Cart extends Model
 {
-    /** @use HasFactory<\Database\Factories\CartFactory> */
+    /** @use HasFactory<CartFactory> */
     use HasFactory;
 
     protected $fillable = [
         'user_id',
+    ];
+
+    /**
+     * @var list<string>
+     */
+    protected $appends = [
+        'subtotal',
+        'formatted_subtotal',
+        'items_count',
     ];
 
     /**

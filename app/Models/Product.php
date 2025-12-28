@@ -9,12 +9,21 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 final class Product extends Model
 {
     /** @use HasFactory<\Database\Factories\ProductFactory> */
     use HasFactory;
+
+    /** @var list<string> */
+    protected $appends = [
+        'image_url',
+        'formatted_price',
+        'is_low_stock',
+        'is_in_stock',
+    ];
 
     protected $fillable = [
         'name',
@@ -102,5 +111,26 @@ final class Product extends Model
         return Attribute::get(
             fn (): bool => $this->stock_quantity > 0
         );
+    }
+
+    /**
+     * @return Attribute<string|null, never>
+     */
+    protected function imageUrl(): Attribute
+    {
+        return Attribute::get(function (): ?string {
+            $image = $this->attributes['image'] ?? null;
+            if (! $image) {
+                return null;
+            }
+
+            // If already a full URL or absolute path, return as-is
+            if (str_starts_with($image, '/') || str_starts_with($image, 'http')) {
+                return $image;
+            }
+
+            // Otherwise, assume it's a storage path
+            return Storage::url($image);
+        });
     }
 }
