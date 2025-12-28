@@ -2,6 +2,11 @@
 
 A Laravel-based e-commerce shopping cart test application built with Vue 3, Inertia.js, and Tailwind CSS.
 
+**Demo URL**: https://shopping-cart-main-gkv6pq.laravel.cloud/
+
+
+<img src="public/images/demo.png" alt="Shopping cart Screenshot" width="100%" />
+
 ## Requirements
 
 - PHP 8.2+
