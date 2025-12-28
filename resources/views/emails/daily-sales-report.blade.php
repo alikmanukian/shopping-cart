@@ -3,13 +3,23 @@
 
 **Date:** {{ $report['date'] }}
 
+<br>
+<br>
+
 ## Summary
 
+<x-mail::table>
 | Metric | Value |
 |--------|-------|
 | Total Orders | {{ $report['total_orders'] }} |
 | Total Revenue | ${{ $report['total_revenue'] }} |
 | Items Sold | {{ $report['total_items_sold'] }} |
+</x-mail::table>
+
+
+
+<br>
+<br>
 
 @if($report['top_products']->isNotEmpty())
 ## Top Selling Products
