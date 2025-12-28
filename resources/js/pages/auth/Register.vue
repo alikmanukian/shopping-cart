@@ -13,8 +13,8 @@ import { Form, Head } from '@inertiajs/vue3';
 
 <template>
     <AuthBase
-        title="Create an account"
-        description="Enter your details below to create your account"
+        title="Get started"
+        description="Create your account to start shopping"
     >
         <Head title="Register" />
 
@@ -84,7 +84,7 @@ import { Form, Head } from '@inertiajs/vue3';
 
                 <Button
                     type="submit"
-                    class="mt-2 w-full"
+                    class="mt-2 w-full rounded-full bg-shop-blue hover:bg-shop-blue-dark"
                     tabindex="5"
                     :disabled="processing"
                     data-test="register-user-button"
